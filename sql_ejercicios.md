@@ -7,5 +7,6 @@
 SELECT f.title AS Nombre_Pelicula
 FROM film f
 WHERE f.rating = 'R';
+```
 
 ## 📘 EJERCICIO 3. Encuentra los nombres de los actores que tengan un “actor_idˮ entre 30 y 40.
