@@ -1,7 +1,7 @@
 -- EJERCICIO 1. Crea el esquema de la BBDD.  
 -- Se adjunta el fichero `diagrama_peliculasSQL.jpg`, que contiene el diagrama de la base de datos `peliculasSQL`.  
 
----
+## 📘 EJERCICIO 1
 
 -- EJERCICIO 2. Muestra los nombres de todas las películas con una clasificación por edades de ‘Rʼ.  
 
