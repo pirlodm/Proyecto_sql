@@ -1,4 +1,10 @@
--- EJERCICIO 1. Crea el esquema de la BBDD.
--- se adjunta fichero ejercicio 1 , contiene diagrama de BBDD pelicula_sql
+-- EJERCICIO 1. Crea el esquema de la BBDD. --
+-- se adjunta fichero diagrama_peliculasSQL.jpg, contiene el diagrama de la base de datos peliculasSQL. --
+
+--EJERCICIO 2. Muestra los nombres de todas las películas con una clasificación por edades de ‘Rʼ.--
+
+select f.title as Nombre_Pelicula
+from film f 
+where f.rating = 'R';
 
 
