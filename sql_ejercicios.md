@@ -21,3 +21,34 @@ from actor a
 
 ## 📘 EJERCICIO 4. Obtén las películas cuyo idioma coincide con el idioma original.
 
+```sql
+SELECT f.title 
+FROM film f 
+WHERE f.original_language_id = f.language_id 
+```
+
+## 📘 EJERCICIO 5. Ordena las películas por duración de forma ascendente.
+
+```sql
+SELECT 
+	f.title as titulo_pelicula,
+	f.length as Duracion
+FROM film f 
+order by duracion asc;
+```
+
+## 📘 EJERCICIO 6. Encuentra el nombre y apellido de los actores que tengan ‘Allenʼ en su apellido
+
+```sql
+SELECT 
+	a.first_name as nombre, 
+	a.last_name as apellido
+FROM actor a 
+WHERE last_name LIKE '%Allen%';
+```
+
+
+
+
+
+
