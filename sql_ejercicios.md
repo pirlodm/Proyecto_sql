@@ -46,7 +46,7 @@ SELECT
 FROM actor a 
 WHERE last_name LIKE '%Allen%';
 ```
-<img width="410" height="394" alt="image" src="https://github.com/user-attachments/assets/c6feea71-5b83-4ad9-8635-a02e73c96eff" />
+
 
 
 
