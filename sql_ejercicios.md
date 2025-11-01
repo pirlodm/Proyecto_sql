@@ -145,7 +145,88 @@ from customer c
 order by c.customer_id desc
 limit 10;
 ```
-## 📘 EJERCICIO 16. Encuentra el nombre y apellido de los actores que aparecen en la película con título ‘Egg Igbyʼ
+## 📘 EJERCICIO 17. Encuentra el nombre y apellido de los actores que aparecen en la película con título ‘Egg Igbyʼ.
+
+```sql
+select 
+	f.title as Titulo_pelicula,
+	concat(a.first_name ,' ',a.last_name ) as Nombre_Actor
+from film f 
+inner join film_actor fa 
+	on f.film_id = fa.film_id
+inner join actor a 
+	on fa.actor_id = a.actor_id
+where f.title = 'Egg Igby';
+```
+### * para comprobar si la falta de resultados era correcta , puse otra sentencia:
+	
+```sql
+SELECT title 
+FROM film
+WHERE title LIKE '%Egg Igby%';
+```
+
+## 📘 EJERCICIO 18. Selecciona todos los nombres de las películas únicos.
+
+```sql
+select distinct title
+from film f 
+order by f.title ;
+```
+## 📘 EJERCICIO 19. Encuentra el título de las películas que son comedias y tienen una duración mayor a 180 minutos en la tabla “filmˮ.
+
+```sql
+select 
+	f.title as titulo,
+	f.length as Duracion,
+	c."name" as categoria 
+from film f 
+inner join film_category fc 
+	on f.film_id = fc.film_id
+inner join category c
+	on fc.category_id = c.category_id 
+where c."name" = 'Comedy'
+	and f.length > 180;
+```
+
+## 📘 EJERCICIO 20. Encuentra las categorías de películas que tienen un promedio de duración superior a 110 minutos y muestra el nombre de la categoría junto con el promedio de duración.
+
+```sql
+select
+	c."name" as categoria,
+	round(avg (f.length )) as Promedio_Duracion
+from film f 
+inner join film_category fc  
+	on f.film_id = fc.film_id
+inner join category c 
+	on fc.category_id = c.category_id
+group by c."name" 
+having avg(f.length ) > 110;
+```
+
+## 📘 EJERCICIO 21. ¿Cuál es la media de duración del alquiler de las películas?.
+
+```sql
+select 
+	AVG(f.rental_duration ) as Media_Duracion
+from film f ;
+```
+
+## 📘 EJERCICIO 22. Crea una columna con el nombre y apellidos de todos los actores y actrices.
+
+```sql
+select
+	concat(a.first_name, ' ', a.last_name)  as Nombre_Completo
+from actor a 
+order by nombre_completo ;
+```
+
+## 📘 EJERCICIO 23. Números de alquiler por día, ordenados por cantidad de alquiler de forma descendente.
+
+
+
+
+
 
 
 
