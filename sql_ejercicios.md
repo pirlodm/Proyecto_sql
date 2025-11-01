@@ -223,6 +223,18 @@ order by nombre_completo ;
 
 ## 📘 EJERCICIO 23. Números de alquiler por día, ordenados por cantidad de alquiler de forma descendente.
 
+```sql
+select 
+	DATE (r.rental_date) as Fecha_Alquiler,
+	count(r.rental_id ) as Cantidad_alquiler
+from rental r 
+group by DATE (r.rental_date) 
+order by cantidad_alquiler DESC;
+```
+
+## 📘 EJERCICIO 24. Encuentra las películas con una duración superior al promedio.
+
+
 
 
 
