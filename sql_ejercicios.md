@@ -234,10 +234,40 @@ order by cantidad_alquiler DESC;
 
 ## 📘 EJERCICIO 24. Encuentra las películas con una duración superior al promedio.
 
+```sql
+select 
+	f.title as titulo_pelicula,
+	f.length as duracion
+from film f 
+where f.length >(
+	select avg(fi.length) 
+	from film fi)
+order by f.length;
+```
 
+## 📘 EJERCICIO 25. Averigua el número de alquileres registrados por mes.
 
+```sql
+select 
+	date_trunc('month',r.rental_date ) as mes,
+	count(r.rental_id) as Numero_Alquileres
+from rental r 
+group by date_trunc('month',r.rental_date );
+```
 
+### * Como vi que no podia ordenarlo por mes , busque otra manera de hacerlo.
 
+```sql
+select 
+	date_trunc('year',r.rental_date ) as Año,
+	date_trunc('month',r.rental_date ) as Mes,
+	count(r.rental_id) as Numero_Alquileres
+from rental r 
+group by Año,Mes
+order by Año,Mes;
+```
+
+## 📘 EJERCICIO 26.
 
 
 
