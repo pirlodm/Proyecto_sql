@@ -388,6 +388,7 @@ left join rental r
 
 ## 📘 EJERCICIO 34.  Encuentra los 5 clientes que más dinero se hayan gastado con nosotros.
 
+```sql
 select 
 	c.customer_id,
 	concat(c.last_name,' ',c.first_name) as Nombre_Cliente,
@@ -400,6 +401,7 @@ inner join payment p
 group by c.customer_id, c.first_name ,c.last_name
 order by total_ventas desc
 limit  5;
+```
 
 ## 📘 EJERCICIO 35. Selecciona todos los actores cuyo primer nombre es 'Johnny'.
 
