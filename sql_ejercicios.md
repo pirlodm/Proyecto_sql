@@ -267,9 +267,56 @@ group by Año,Mes
 order by Año,Mes;
 ```
 
-## 📘 EJERCICIO 26.
+## 📘 EJERCICIO 26. Encuentra el promedio, la desviación estándar y varianza del total pagado.
+
+```sql
+select 
+	round(AVG(p.amount),2) as Media,
+	round(STDDEV(p.amount),2) as Desviacion_estandar,
+	round(VARIANCE(p.amount),2)	as varianza
+from payment p ;
+```
+
+## 📘 EJERCICIO 27. ¿Qué películas se alquilan por encima del precio medio?.
+
+```sql
+SELECT 
+    f.title as Titulo_Pelicula,
+    f.rental_rate as Precio_alquiler
+FROM film f
+WHERE f.rental_rate > (
+    SELECT AVG(rental_rate)
+    FROM film
+);
+```
+
+## 📘 EJERCICIO 28. Muestra el id de los actores que hayan participado en más de 40 películas.
+
+```sql
+select 
+	fa.actor_id,
+	count(fa.film_id) as Numero_peliculas
+from film_actor fa
+group by actor_id
+having count(fa.film_id) > 40;
+```
 
 
+### * si ademas queremos añadirle los nombres al ejercicio.
+
+```sql
+select 
+	a.actor_id,
+	concat(a.first_name ,' ' ,a.last_name ) as Nombre_Actor,
+	count(fa.film_id) as Numero_peliculas
+from film_actor fa
+inner join actor a 
+	on fa.actor_id = a.actor_id 
+group by a.actor_id, a.first_name, a.last_name
+having count(fa.film_id) > 40;
+```
+
+## 📘 EJERCICIO 29. Obtener todas las películas y, si están disponibles en el inventario, mostrar la cantidad disponible.
 
 
 
