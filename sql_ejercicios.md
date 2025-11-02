@@ -405,12 +405,118 @@ limit  5;
 
 ## 📘 EJERCICIO 35. Selecciona todos los actores cuyo primer nombre es 'Johnny'.
 
+```sql
+select
+	a.first_name
+from actor a
+where a.first_name = 'Johnny';
+```
+
+### * No muestra ningun resultado , la causa es por que todos los nombres estan en mayusculas y nosotros bucamos el resultado en miniscula.
 
 
+## 📘 EJERCICIO 36.Renombra la columna “first_nameˮ como Nombre y “last_nameˮ como Apellido.
 
+```sql
+select 
+	a.first_name as Nombre,
+	a.last_name as Apellido
+from actor a ;
+```
 
+## 📘 EJERCICIO 37.  Encuentra el ID del actor más bajo y más alto en la tabla actor.
 
+```sql
+select 
+	MIN(a.actor_id) as Minimo,
+	MAX(a.actor_id) as maximo
+from actor a;
+```
 
+## 📘 EJERCICIO 38. Cuenta cuántos actores hay en la tabla “actorˮ.
+
+```sql
+select 
+	count(a.actor_id) as Total_actores
+from actor a; 
+```
+## 📘 EJERCICIO 39. Selecciona todos los actores y ordénalos por apellido en orden ascendente.
+
+```sql
+select 
+	a.first_name as Nombre,
+	a.last_name as Apellido
+from actor a 
+order by apellido asc;
+```
+
+## 📘 EJERCICIO 40.  Selecciona las primeras 5 películas de la tabla “filmˮ.
+
+```sql
+select
+	f.film_id,
+	f.title as Titulo_Pelicula
+from film f
+limit 5;
+```
+
+## 📘 EJERCICIO 41.  Agrupa los actores por su nombre y cuenta cuántos actores tienen el mismo nombre. ¿Cuál es el nombre más repetido?.
+
+```sql
+select 
+	a.first_name as Nombre,
+	count(a.actor_id ) as cantidad
+from actor a 
+group by a.first_name
+order by cantidad desc;
+```
+
+### * si solo queremos ver el mas repetido :
+```sql
+select 
+	a.first_name as Nombre,
+	count(a.actor_id ) as cantidad
+from actor a 
+group by a.first_name
+order by cantidad desc
+limit 1;
+```
+
+## 📘 EJERCICIO 42. Encuentra todos los alquileres y los nombres de los clientes que los realizaron.
+
+```sql
+select 
+	r.rental_id ,
+	concat(c.first_name ,' ',c.last_name ) as Nombre_Cliente
+from rental r
+inner join customer c 
+	on r.customer_id = c.customer_id;
+```
+
+## 📘 EJERCICIO 43. Muestra todos los clientes y sus alquileres si existen, incluyendo aquellos que no tienen alquileres.
+
+```sql
+select 
+	c.customer_id,
+	concat(c.first_name ,' ',c.last_name ) as NombreCliente,
+	r.rental_date ,
+	r.rental_id 
+from customer c
+left join rental r 
+	on c.customer_id = r.customer_id;
+```
+
+## 📘 EJERCICIO 44. Realiza un CROSS JOIN entre las tablas film y category. ¿Aporta valor esta consulta? ¿Por qué? Deja después de la consulta la contestación.
+
+```sql
+select *
+from film f 
+cross join category c ;
+```
+
+### * la consulta no aporta ningun valor practico ya que no aporta datos reales, lo mas logico hubiera sido usar un INNER JOIN.
+
+## 📘 EJERCICIO 45. Encuentra los actores que han participado en películas de la categoría 'Action'.
 
 
 
