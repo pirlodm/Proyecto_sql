@@ -318,6 +318,32 @@ having count(fa.film_id) > 40;
 
 ## 📘 EJERCICIO 29. Obtener todas las películas y, si están disponibles en el inventario, mostrar la cantidad disponible.
 
+```sql
+select 
+	f.film_id,
+	f.title ,
+	count(i.inventory_id )
+from film f 
+left join inventory i 
+	on f.film_id = i.film_id
+group by f.film_id , f.title ;
+```
+
+## 📘 EJERCICIO 30. Obtener los actores y el número de películas en las que ha actuado.
+
+```sql
+select 
+	concat(a.first_name,' ',a.last_name  ) as NombreActor,
+	count(fa.film_id ) as NumeroPeliculas
+from actor a 
+inner join film_actor fa 
+	on a.actor_id = fa.actor_id
+group by a.first_name , a.last_name 
+order by numeropeliculas desc;
+```
+
+## 📘 EJERCICIO 31. Obtener todas las películas y mostrar los actores que han actuado en ellas, incluso si algunas películas no tienen actores asociados.
+
 
 
 
