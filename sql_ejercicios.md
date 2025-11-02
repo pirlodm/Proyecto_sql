@@ -346,6 +346,7 @@ order by numeropeliculas desc;
 
 ```sql
 SELECT 
+	f.film_id,
     f.title as Titulo_Pelicula,
     concat(a.first_name,' ',a.last_name) as Nombre_Actor
 FROM film f
@@ -355,6 +356,58 @@ LEFT JOIN actor a
     ON fa.actor_id = a.actor_id
 ORDER BY f.title, a.last_name, a.first_name;
 ```
+
+## 📘 EJERCICIO 32. Obtener todos los actores y mostrar las películas en las que han actuado, incluso si algunos actores no han actuado en ninguna película.
+
+```sql
+SELECT 
+	a.actor_id,
+	concat(a.first_name,' ',a.last_name) as NombreActor,
+	f.title as Titulo_Pelicula
+from actor a 
+left join film_actor fa 
+	on a.actor_id = fa.actor_id
+left join film f 
+	on fa.film_id = f.film_id;
+```
+
+## 📘 EJERCICIO 33. Obtener todas las películas que tenemos y todos los registros de alquiler.
+
+```sql
+select 
+	f.film_id,
+	f.title as Titutlo_Pelicula,
+	r.rental_id,
+	r.rental_date as Registro_Alquiler
+from film f 
+left join inventory i 
+	on f.film_id = i.film_id
+left join rental r 
+	on i.inventory_id = r.inventory_id	;
+```
+
+## 📘 EJERCICIO 34.  Encuentra los 5 clientes que más dinero se hayan gastado con nosotros.
+
+select 
+	c.customer_id,
+	concat(c.last_name,' ',c.first_name) as Nombre_Cliente,
+	SUM(p.amount )as Total_Ventas
+from  customer c
+inner join rental r 
+	on c.customer_id = r.customer_id
+inner join payment p 
+	on c.customer_id = p.customer_id
+group by c.customer_id, c.first_name ,c.last_name
+order by total_ventas desc
+limit  5;
+
+## 📘 EJERCICIO 35. Selecciona todos los actores cuyo primer nombre es 'Johnny'.
+
+
+
+
+
+
 
 
 
