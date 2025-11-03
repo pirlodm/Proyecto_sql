@@ -611,5 +611,131 @@ order by numero_alquileres desc;
 
 ## 📘 EJERCICIO 50. Calcula la duración total de las películas en la categoría 'Action'.
 
+```sql
+select 
+	c."name" as Categoria,
+	sum(f.length) as Duracion_Total
+from category c 
+inner join film_category fc
+	on c.category_id = fc.category_id
+inner join film f 
+	on fc.film_id = f.film_id 
+where c."name" = 'Action'
+group by c."name";
+```
+
+## 📘 EJERCICIO 51. Crea una tabla temporal llamada “cliente_rentas_temporalˮ para almacenar el total de alquileres por cliente.
+
+```sql
+create temporary table cliente_rentas_temporal as 
+	select 
+		c.customer_id ,
+		concat(c.first_name, ' ', c.last_name ) as Nombre_Cliente,
+		count(r.rental_id) as Total_Alquiler
+	from customer c
+	inner join rental r 
+		on c.customer_id = r.customer_id
+	group by c.customer_id, c.first_name ,c.last_name
+	order by Total_Alquiler desc;
+```
+
+```sql
+select *
+from cliente_rentas_temporal;
+```
+
+## 📘 EJERCICIO 52. Crea una tabla temporal llamada “peliculas_alquiladasˮ que almacene las películas que han sido alquiladas al menos 10 veces.
+
+```sql
+create temporary table Peliculas_Alquiladas as
+select 
+	f.film_id ,
+	f.title as Titulo_Pelicula,
+	count(r.rental_id) as Cantidad_Alquiler
+from film f 
+inner join inventory i 
+	on f.film_id = i.film_id
+inner join rental r 
+	on i.inventory_id = r.inventory_id
+group by f.film_id , f.title
+having count(r.rental_id) >= 10
+order by cantidad_alquiler ;
+```
+
+```sql
+select *
+from Peliculas_Alquiladas ;
+```
+
+## 📘 EJERCICIO 53. Encuentra el título de las películas que han sido alquiladas por el cliente con el nombre ‘Tammy Sandersʼ y que aún no se han devuelto. Ordena los resultados alfabéticamente por título de película.
+
+```sql
+select 
+	f.title 
+from customer c
+inner join rental r 
+	on c.customer_id = r.customer_id
+inner join inventory i
+	on r.inventory_id = i.inventory_id
+inner join film f 
+	on i.film_id = f.film_id
+where 
+	c.first_name = 'Tammy'
+	and c.last_name = 'Sanders'
+group by title
+order by f.title ;
+```
+
+### * Al ver que no me ofrecia ningun resultado , comprobe si existia ese cliente.
+
+
+```sql
+select 
+	c.customer_id,
+	c.first_name,
+	c.last_name 
+from customer c 
+where 
+	c.first_name = 'Tammy'
+	and c.last_name  = 'Sanders';
+```
+
+## 📘 EJERCICIO 54.  Encuentra los nombres de los actores que han actuado en al menos una película que pertenece a la categoría ‘Sci-Fiʼ. Ordena los resultados alfabéticamente por apellido.
+
+```sql
+select distinct
+	a.first_name as Nombre,
+	a.last_name as Apellido,
+	c."name" as categoria
+from actor a 
+inner join film_actor fa 
+	on a.actor_id = fa.actor_id
+inner join film f 
+	on fa.film_id = f.film_id
+inner join film_category fc
+	on f.film_id = fc.film_id
+inner join category c 
+	on fc.category_id = c.category_id 
+where c."name" = 'Sci-Fi'
+group by a.first_name ,a.last_name,c."name"
+order by a.last_name ;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
