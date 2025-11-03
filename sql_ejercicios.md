@@ -518,12 +518,98 @@ cross join category c ;
 
 ## 📘 EJERCICIO 45. Encuentra los actores que han participado en películas de la categoría 'Action'.
 
+### * al principio creia que de esta manera era correcto hasta que me di cuenta que se repetian.
 
 
+```sql
+select
+	concat(a.first_name,' ',a.last_name) as Nombre_Actor,
+	c."name" as categoria
+from actor a 
+inner join film_actor fa 
+	on a.actor_id = fa.actor_id
+inner join film f 
+	on fa.film_id = f.film_id
+inner join film_category fc 
+	on f.film_id = fc.film_id
+inner join category c
+	on fc.category_id = c.category_id 
+where c."name" = 'Action' ;
+```
+### * correcion del ejercicio, aplicando distinct.
 
+```sql
+select distinct
+	concat(a.first_name,' ',a.last_name) as Nombre_Actor,
+	c."name" as categoria
+from actor a 
+inner join film_actor fa 
+	on a.actor_id = fa.actor_id
+inner join film f 
+	on fa.film_id = f.film_id
+inner join film_category fc 
+	on f.film_id = fc.film_id
+inner join category c
+	on fc.category_id = c.category_id 
+where c."name" = 'Action' ;
+```
 
+## 📘 EJERCICIO 46. Encuentra todos los actores que no han participado en películas.
 
+```sql
+select 
+	a.actor_id,
+	concat(a.first_name,' ',a.last_name)	
+from actor a 
+left join film_actor fa 
+on a.actor_id = fa.actor_id
+where fa.film_id is null;
+```
 
+## 📘 EJERCICIO 47. Selecciona el nombre de los actores y la cantidad de películas en las que han participado.
+
+```sql
+select 
+	a.actor_id ,
+	concat(a.first_name ,' ',a.last_name ) as Nombre_Actor,
+	count(fa.film_id ) as Cantidad_Peliculas
+from actor a 
+left join film_actor fa 
+	on a.actor_id = fa.actor_id
+group by a.actor_id , a.first_name ,a.last_name 
+order by cantidad_peliculas  desc;
+```
+
+## 📘 EJERCICIO 48. Crea una vista llamada “actor_num_peliculasˮ que muestre los nombres de los actores y el número de películas en las que han participado.
+
+```sql
+create view Actor_Num_Peliculas as
+select 
+	a.actor_id ,
+	concat(a.first_name ,' ',a.last_name ) as Nombre_Actor,
+	count(fa.film_id ) as Cantidad_Peliculas
+from actor a 
+left join film_actor fa 
+	on a.actor_id = fa.actor_id
+group by a.actor_id , a.first_name ,a.last_name 
+order by cantidad_peliculas  desc;
+```
+
+## 📘 EJERCICIO 49. Calcula el número total de alquileres realizados por cada cliente.
+
+```sql
+select 
+	c.customer_id,
+	concat(c.first_name,' ',c.last_name) as Nombre_cliente,
+	count(Rental_id) as Numero_Alquileres
+from customer c 
+left join rental r 
+	on c.customer_id = r.customer_id
+group by c.customer_id, c.first_name, c.last_name 
+order by numero_alquileres desc;
+```
+
+## 📘 EJERCICIO 50. Calcula la duración total de las películas en la categoría 'Action'.
 
 
 
