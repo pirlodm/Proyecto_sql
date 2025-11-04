@@ -769,7 +769,64 @@ ORDER BY a.last_name, a.first_name;
 
 ## 📘 EJERCICIO 57. Encuentra el título de todas las películas que fueron alquiladas por más de 8 días.
 
+```sql
+SELECT DISTINCT f.title,
+       EXTRACT(DAY FROM (r.return_date - r.rental_date)) AS Dias_Alquiler
+FROM film f
+JOIN inventory i ON f.film_id = i.film_id
+JOIN rental r ON i.inventory_id = r.inventory_id
+WHERE (r.return_date - r.rental_date) > INTERVAL '8 days'
+ORDER BY Dias_Alquiler, f.title;
+```
 
+### * en esta he tenido que buscar ayuda, no sabia como proceder con la resta de fechas.
+
+## 📘 EJERCICIO 58.  Encuentra el título de todas las películas que son de la misma categoría que ‘Animationʼ.
+
+```sql
+SELECT 
+	f.title as Titulo,
+	c."name"  as categoria
+FROM film f
+JOIN film_category fc ON f.film_id = fc.film_id
+JOIN category c ON fc.category_id = c.category_id
+WHERE c.name = 'Animation'
+ORDER BY f.title;
+```
+
+## 📘 EJERCICIO 59. Encuentra los nombres de las películas que tienen la misma duración que la película con el título ‘Dancing Feverʼ. Ordena los resultados alfabéticamente por título de película.
+
+```sql
+select 
+	f.title 
+from film f 
+where f.length = (
+		select 
+			f.length 
+		from film f 
+		where LOWER(f.title ) = LOWER('Dancing Fever')
+)
+order by f.title;
+```
+
+## 📘 EJERCICIO 60. Encuentra los nombres de los clientes que han alquilado al menos 7 películas distintas. Ordena los resultados alfabéticamente por apellido.
+
+```sql
+select 
+	c.first_name,
+	c.last_name ,
+	count(DISTINCT i.film_id ) as Alquiler
+from customer c 
+inner join rental r 
+	on c.customer_id = r.customer_id
+inner join inventory i 
+	on r.inventory_id = i.inventory_id
+group by c.customer_id, c.first_name ,c.last_name 
+having count(DISTINCT i.film_id ) >= 7
+order by c.last_name ;
+```
+
+## 📘 EJERCICIO 61. Encuentra la cantidad total de películas alquiladas por categoría y muestra el nombre de la categoría junto con el recuento de alquileres.
 
 
 
