@@ -721,9 +721,53 @@ group by a.first_name ,a.last_name,c."name"
 order by a.last_name ;
 ```
 
+## 📘 EJERCICIO 55. Encuentra el nombre y apellido de los actores que han actuado en películas que se alquilaron después de que la película ‘Spartacus Cheaperʼ se alquilara por primera vez. Ordena los resultados alfabéticamente por apellido.
+
+```sql
+select
+	a.first_name as nombre,
+	a.last_name as apellido
+from actor a 
+inner join film_actor fa 
+	on a.actor_id = fa.actor_id
+inner join film f 
+	on fa.film_id = f.film_id
+inner join inventory i 
+	on f.film_id = i.film_id
+inner join rental r 
+	on i.inventory_id = r.inventory_id
+where r.rental_date > (
+		SELECT  MIN(r.rental_date ) 
+		FROM film f
+		inner join inventory i  
+			on f.film_id = i.film_id
+		inner join rental r 
+			on i.inventory_id = r.inventory_id
+		WHERE LOWER(f.title) LIKE LOWER('%spartacus%')
+)
+group by a.actor_id, a.first_name, a.last_name
+order by apellido, nombre;
+```
+
+## 📘 EJERCICIO 56.  Encuentra el nombre y apellido de los actores que no han actuado en ninguna película de la categoría ‘Musicʼ.
+
+```sql
+SELECT a.first_name, a.last_name
+FROM actor a
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM film_actor fa
+    JOIN film f ON fa.film_id = f.film_id
+    JOIN film_category fc ON f.film_id = fc.film_id
+    JOIN category c ON fc.category_id = c.category_id
+    WHERE fa.actor_id = a.actor_id
+      AND c.name = 'Music'
+)
+ORDER BY a.last_name, a.first_name;
+```
 
 
-
+## 📘 EJERCICIO 57. Encuentra el título de todas las películas que fueron alquiladas por más de 8 días.
 
 
 
