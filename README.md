@@ -7,3 +7,10 @@ A lo largo del proyecto se realizan ejercicios reales, paso a paso, para compren
 
 ## 🗂️ Contenido del proyecto
 
+### •	Ejercicios.sql:
+archivo principal con todas las consultas resueltas y comentadas para facilitar su comprensión.
+
+### •	Esquema.sql: 
+definición del esquema de la base de datos utilizada en los ejercicios.
+
+### •	Esquema.sql:
