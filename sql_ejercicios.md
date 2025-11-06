@@ -828,9 +828,66 @@ order by c.last_name ;
 
 ## 📘 EJERCICIO 61. Encuentra la cantidad total de películas alquiladas por categoría y muestra el nombre de la categoría junto con el recuento de alquileres.
 
+```sql
+select 
+	c."name" as categoria,
+	count(r.rental_id) as Total_alquileres
+from category c 
+inner join film_category fc 
+	on c.category_id = fc.category_id
+inner join film f 
+	on fc.film_id = f.film_id 
+inner join inventory i 
+	on f.film_id = i.film_id
+inner join rental r 
+	on i.inventory_id = r.inventory_id
+group by c."name" 
+order by total_alquileres desc;
+```
 
+## 📘 EJERCICIO 62.  Encuentra el número de películas por categoría estrenadas en 2006.
 
+```sql
+select
+	c."name" as Categoria,
+	count(f.film_id) as Total_peliculas
+from category c 
+inner join film_category fc 
+	on c.category_id = fc.category_id
+inner join film f 
+	on fc.film_id = f.film_id
+where f.release_year = 2006
+group by c."name" 
+order by total_peliculas desc;
+```
 
+## 📘 EJERCICIO 63. Obtén todas las combinaciones posibles de trabajadores con las tiendas que tenemos.
+
+```sql
+select 
+	concat(s.first_name,' ',s.last_name) as Empleados,
+	s2.store_id as Tiendas
+from staff s
+cross join store s2;
+```
+
+## 📘 EJERCICIO 64.  Encuentra la cantidad total de películas alquiladas por cada cliente y muestra el ID del cliente, su nombre y apellido junto con la cantidad de películas alquiladas.
+
+```sql
+select 
+	c.customer_id,
+	concat(c.first_name,' ',c.last_name) as Cliente,
+	count(f.film_id) as Total_Alquiler
+from customer c 
+inner join rental r 
+	on c.customer_id = r.customer_id
+inner join inventory i 
+	on r.inventory_id = i.inventory_id
+inner join film f 
+	on i.film_id = f.film_id
+group by c.customer_id, c.first_name ,c.last_name 
+order by total_alquiler desc;
+```
 
 
 
