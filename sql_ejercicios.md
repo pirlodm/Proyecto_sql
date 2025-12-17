@@ -67,7 +67,18 @@ from film f
 where f.rating  = 'PG-13'
 and f.length > 180;
 ```
+## 📌 CORRECCION DEL EJERCICIO 8. Encuentra el título de todas las películas que son ‘PG13ʼ o tienen una duración mayor a 3 horas en la tabla film.
 
+```sql
+select 
+	f.title as titulo_pelicula,
+	f.length as duracion,
+	f.rating
+from film f 
+where f.rating  = 'PG-13'
+or f.length > 180;
+```
+	
 ## 📘 EJERCICIO 9. Encuentra la variabilidad de lo que costaría reemplazar las películas.
 
 ```sql
@@ -96,6 +107,18 @@ from rental r
 order by r.rental_date desc
 limit 1 
 offset 2;
+```
+
+## 📌 CORRECCION DEL EJERCICIO 11. Encuentra lo que costó el antepenúltimo alquiler ordenado por día.
+
+```sql
+Select 
+    p.amount AS precio,
+    r.rental_date AS dia_alquiler
+from rental r
+Join payment p ON r.rental_id = p.rental_id
+order by r.rental_date DESC
+limit 1 offset 2;
 ```
 
 ## 📘 EJERCICIO 12. Encuentra el título de las películas en la tabla “filmˮ que no sean ni ‘NC-17ʼ ni ‘Gʼ en cuanto a su clasificación.
@@ -210,6 +233,15 @@ having avg(f.length ) > 110;
 select 
 	AVG(f.rental_duration ) as Media_Duracion
 from film f ;
+```
+
+## 📌 CORRECCION DEL EJERCICIO 21. ¿Cuál es la media de duración del alquiler de las películas?.
+
+```sql
+select 
+    round(avg(return_date::date - rental_date::date),2) AS media_duracion_alquiler
+from rental r 
+where return_date is not null;
 ```
 
 ## 📘 EJERCICIO 22. Crea una columna con el nombre y apellidos de todos los actores y actrices.
@@ -688,7 +720,6 @@ order by f.title ;
 
 ### * Al ver que no me ofrecia ningun resultado , comprobe si existia ese cliente.
 
-
 ```sql
 select 
 	c.customer_id,
@@ -698,6 +729,26 @@ from customer c
 where 
 	c.first_name = 'Tammy'
 	and c.last_name  = 'Sanders';
+```
+
+## 📌 CORRECCION DEL EJERCICIO 53. Encuentra el título de las películas que han sido alquiladas por el cliente con el nombre ‘Tammy Sandersʼ y que aún no se han devuelto. Ordena los resultados alfabéticamente por título de película.
+
+```sql
+select 
+	f.title 
+from customer c
+inner join rental r 
+	on c.customer_id = r.customer_id
+inner join inventory i
+	on r.inventory_id = i.inventory_id
+inner join film f 
+	on i.film_id = f.film_id
+where 
+	c.first_name = 'Tammy'
+	and c.last_name = 'Sanders'
+	and r.return_date is null
+group by title
+order by f.title ;
 ```
 
 ## 📘 EJERCICIO 54.  Encuentra los nombres de los actores que han actuado en al menos una película que pertenece a la categoría ‘Sci-Fiʼ. Ordena los resultados alfabéticamente por apellido.
